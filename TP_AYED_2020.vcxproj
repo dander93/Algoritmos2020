@@ -141,6 +141,14 @@
   <ItemGroup>
     <ClCompile Include="ayed2020tp.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Documentacion\TP_AYED_2020.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\Comun.h" />
+    <ClInclude Include="Headers\Empleados.h" />
+    <ClInclude Include="Headers\Ventas.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
