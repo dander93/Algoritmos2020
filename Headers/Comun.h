@@ -20,9 +20,10 @@ namespace comunesNamespace
 		const char* escritura = "w";
 		const char* escrituraAlFinal = "w+";
 		const char* lecturaBinario = "rb";
-		const char* escrituraBinario = "rb";
+		const char* escrituraBinario = "wb";
 		const char* lecturaYEscrituraBinario = "rb+";
 		const char* escribirCrearBinario = "wb+";
+		const char* concatenarAlFinal = "a+";
 	};
 
 	//Estructura para los tipos de fecha predefinidos

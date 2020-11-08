@@ -1,5 +1,6 @@
 #pragma once
 #include "comun.h"
+#include <fstream>
 
 using namespace comunesNamespace;
 using namespace std;
@@ -14,16 +15,24 @@ namespace loggerNamespace
 	void _logEvent(logEventType theEvent) {
 		if (LOG_TOCONSOLE)
 		{
-			cout << theEvent.mensaje << endl;
+			cout << getLogString(theEvent) << endl;
 		}
 
 		if (LOG_TOFILE)
 		{
+			/*
+			* Lo hago así para que los logs sean un archivo plano legible
+			* */
 			string rutaArchivo = PATH_LOGS_FOLDER + PATH_LOG_FILE;
-
-			FILE* logsFile = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escrituraAlFinal);
-			fwrite(&theEvent, sizeof(logEventType), 1, logsFile);
-			fclose(logsFile);
+			ofstream out(rutaArchivo, std::ios::ate | std::ios::in);
+			//seteo el output stream en el archivo y hago con el ate y el in que se setee el cursos al final del archivo(con el ate) y que no se trunque(con el in)
+			out << getLogString(theEvent) << endl;
+			out.close();
+			/*
+				FILE* logsFile = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escrituraAlFinal);
+				fwrite(&theEvent, sizeof(logEventType), 1, logsFile);
+				fclose(logsFile);
+			*/
 		}
 	}
 
@@ -38,10 +47,24 @@ namespace loggerNamespace
 
 		if (LOG_TOFILE)
 		{
+			/*
+			* Lo hago así para que los logs sean un archivo plano legible
+			* */
 			string rutaArchivo = PATH_LOGS_FOLDER + PATH_LOG_FILE;
-			FILE* logsFile = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario);
-			fwrite(theLogs, sizeof(logEventType), logLen + 1, logsFile);
-			fclose(logsFile);
+			//seteo el output stream en el archivo y hago con el ate y el in que se setee el cursos al final del archivo(con el ate) y que no se trunque(con el in)
+			ofstream out(rutaArchivo, std::ios::ate | std::ios::in);
+
+			for (int i = 0; i <= logLen; i++)
+			{
+				out << getLogString(theLogs[i]) << endl;
+			}
+
+			out.close();
+			/*
+				FILE* logsFile = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario);
+				fwrite(theLogs, sizeof(logEventType), logLen + 1, logsFile);
+				fclose(logsFile);
+			*/
 		}
 	}
 

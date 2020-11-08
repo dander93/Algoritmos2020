@@ -36,11 +36,17 @@ void initProc() {
 int main() {
 	initProc();
 
+	logInfo("Inicio del proceso de empleados","main");
 	crearEmpleados();
 	mostrarEmpleados();
+	logInfo("Fin proceso de empleados","main");
+	logInfo("Inicio del proceso de ventas","main");
 	crearVentas();
 	mostrarVentas();
+	logInfo("Fin proceso de ventas","main");
 
 	resolucionTp();
+
+	logInfo("Fin del programa", "main");
 	return 0;
 }
