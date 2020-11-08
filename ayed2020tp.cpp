@@ -4,10 +4,10 @@
 #include "Headers/Logger.h"
 
 using namespace std;
-using namespace comunesNamespace;
+using namespace FilesHelper;
 using namespace empleadosNamespace;
 using namespace ventasNamespace;
-using namespace loggerNamespace;
+using namespace LoggerHelper;
 
 void resolucionTp() {
 	//TODO completar aquí con la resolución del TP
@@ -17,12 +17,12 @@ void resolucionTp() {
 
 
 void initProc() {
-	logEventType theLogs[10];
+	LogEventType theLogs[10];
 	int logLen = 0;
 
 	theLogs[0].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
 	theLogs[0].mensaje = "Inicio del programa";
-	strcpy(theLogs[logLen].nivel, "INFO");
+	//strcpy(theLogs[logLen].nivel, "INFO");
 	theLogs[0].origen = "Startup";
 
 	//creamos/comprobamos la carpeta de logueo

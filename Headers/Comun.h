@@ -8,11 +8,14 @@
 #include <string.h>
 #include <direct.h>
 #include <sys/stat.h>
-#include <ctime>
+#include "Logger.h"
+#include "TimeHelper.h"
 
 using namespace std;
+using namespace LoggerHelper;
+using namespace TimeHelper;
 
-namespace comunesNamespace
+namespace FilesHelper
 {
 	//Estructura con los tipos de lectura para archivos predefinidos
 	const struct fileOpenTypeCommons {
@@ -24,60 +27,7 @@ namespace comunesNamespace
 		const char* lecturaYEscrituraBinario = "rb+";
 		const char* escribirCrearBinario = "wb+";
 		const char* concatenarAlFinal = "a+";
-	};
-
-	//Estructura para los tipos de fecha predefinidos
-	const struct dateTimeFormats {
-		//Formato dd/MM/yyyy HH:mm:ss - Ej: 07/11/2020 22:48:32
-		const string ddMMyyyyHHmmssSlayed = "%d/%m/%Y %X";
-		//Formato dd/MM/yyyy - Ej: 07/11/2020
-		const string ddMMyyyySlayed = "%d/%m/%Y";
-		//Formato dd-MM-yyyy - Ej: 07-11-2020
-		const string ddMMyyyyMidScored = "%d-%m-%Y";
-		//Formato ddMmyyyy - EJ 07112020
-		const string ddMMyyyy = "%d%m%Y";
-		//Formato HH:mm:ss - Ej: 22:45:23
-		const string HHmmss = "%X";
-		//Formato yyyy - Ej: 2020
-		const string Year = "%Y";
-		//Formato mm - Ej: 01 (enero)
-		const string Month = "%m";
-		//Formato dd - Ej: 01
-		const string Day = "%d";
-		//Formato Nombre del mes - Ej : November (en inglés)
-		const string MonthName = "%B";
-	};
-
-	//estructura de logs
-	struct logEventType {
-		string fecha;
-		//máximo 5 letras común para usar INFO , WARN, ERROR
-		char nivel[5 + 1];
-		string origen;
-		string mensaje;
-	};
-
-	const bool LOG_TOCONSOLE = true;
-	const bool LOG_TOFILE = true;
-	static const fileOpenTypeCommons MODOS_APERTURA;
-	static const dateTimeFormats TIPOS_FECHA;
-
-	/*
-	 * Obtiene la fecha y/o hora actuales.
-	 *
-	 * @param formato: El formato de la fecha esperada.
-	 * @return La fecha según el formato requerido.
-	 */
-	string getCurrentDateTime(string formato) {
-		time_t now = time(0);
-		struct tm timeStruct;
-		char timeBuffer[80];
-		timeStruct = *localtime(&now);
-
-		strftime(timeBuffer, sizeof(timeBuffer), formato.c_str(), &timeStruct);
-
-		return timeBuffer;
-	}
+	} MODOS_APERTURA;
 
 	/*
 	 * Comprueba si una carpeta existe
@@ -85,9 +35,9 @@ namespace comunesNamespace
 	 * @param filePath: El path de la carpeta a comprobar.
 	 * @return True si la carpeta existe.
 	 */
-	bool _checkFolderExist(string filePath) {
+	bool _folderExist(string path) {
 		struct stat st;
-		stat(filePath.c_str(), &st);
+		stat(path.c_str(), &st);
 		return (st.st_mode & S_IFDIR);//comprueba si la carpeta existe con una comprobación de tipo bit ( ya que si la carpeta no existe st.st_mode vale 0)
 	}
 
@@ -99,15 +49,15 @@ namespace comunesNamespace
 	 * @param logLen: El len del array de logs.
 	 * @return True si la carpeta existe.
 	 */
-	bool _checkFolderExist(string filePath, logEventType theLogs[], int& logLen) {
+	bool _folderExist(string path, LogEventType theLogs[], int& logLen) {
 		logLen++;
 		theLogs[logLen].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
-		theLogs[logLen].mensaje = "Comprobando si la carpeta: " + filePath + " existe.";
-		strcpy(theLogs[logLen].nivel, "INFO");
+		theLogs[logLen].mensaje = "Comprobando si la carpeta: " + path + " existe.";
+		theLogs[logLen].nivel = LogLevels::INFO;
 		theLogs[logLen].origen = "Startup";
 
 		struct stat st;
-		stat(filePath.c_str(), &st);
+		stat(path.c_str(), &st);
 		return (st.st_mode & S_IFDIR);//comprueba si la carpeta existe con una comprobación de tipo bit ( ya que si la carpeta no existe st.st_mode vale 0)
 	}
 
@@ -129,11 +79,11 @@ namespace comunesNamespace
 	 * @param logLen: El len del array de logs.
 	 * @return True si la carpeta es creada.
 	 */
-	bool _createFolder(string path, logEventType theLogs[], int& logLen) {
+	bool _createFolder(string path, LogEventType theLogs[], int& logLen) {
 		logLen++;
 		theLogs[logLen].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
 		theLogs[logLen].mensaje = "Creando carpeta: " + path + ".";
-		strcpy(theLogs[logLen].nivel, "INFO");
+		theLogs[logLen].nivel = LogLevels::INFO;
 		theLogs[logLen].origen = "Startup";
 
 		return _mkdir(path.c_str());
@@ -146,7 +96,7 @@ namespace comunesNamespace
 	 * @return true si la carpeta existe o es creada.
 	 */
 	void createFolderIfNoExist(string path) {
-		if (!_checkFolderExist(path))
+		if (!_folderExist(path))
 		{
 			_createFolder(path);
 		}
@@ -160,12 +110,12 @@ namespace comunesNamespace
 	 * @param logLen: El len del array de logs.
 	 * @return True si la carpeta existe o es creada.
 	 */
-	void createFolderIfNoExist(string path, logEventType theLogs[], int& logLen) {
-		if (!_checkFolderExist(path, theLogs, logLen))
+	void createFolderIfNoExist(string path, LogEventType theLogs[], int& logLen) {
+		if (!_folderExist(path, theLogs, logLen))
 		{
 			logLen++;
 			theLogs[logLen].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
-			strcpy(theLogs[logLen].nivel, "INFO");
+			theLogs[logLen].nivel = LogLevels::INFO;
 			theLogs[logLen].origen = "Startup";
 			theLogs[logLen].mensaje = "La carpeta: \"" + path + "\" no existia.";
 
@@ -175,14 +125,11 @@ namespace comunesNamespace
 		{
 			logLen++;
 			theLogs[logLen].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
-			strcpy(theLogs[logLen].nivel, "INFO");
+			theLogs[logLen].nivel = LogLevels::INFO;
 			theLogs[logLen].origen = "Startup";
 			theLogs[logLen].mensaje = "La carpeta: \"" + path + "\" existia.";
 		}
 	}
-
-	const string PATH_LOGS_FOLDER = ".\\LOGS\\";
-	const string PATH_LOG_FILE = "log" + getCurrentDateTime(TIPOS_FECHA.ddMMyyyy) + ".log";
 
 	const string PATH_DATA_FILES = ".\\DATA_FILES\\";
 	const string PATH_EMPLEADOS_DAT_FILE_NAME = "Empleados.dat";

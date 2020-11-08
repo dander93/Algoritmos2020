@@ -1,7 +1,7 @@
 #pragma once
 #include "comun.h"
 
-using namespace comunesNamespace;
+using namespace FilesHelper;
 
 namespace empleadosNamespace
 {
