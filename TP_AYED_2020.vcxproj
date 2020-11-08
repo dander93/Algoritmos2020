@@ -149,8 +149,8 @@
   <ItemGroup>
     <ClInclude Include="Headers\Comun.h" />
     <ClInclude Include="Headers\Empleados.h" />
+    <ClInclude Include="Headers\Logger.h" />
     <ClInclude Include="Headers\Ventas.h" />
-    <ClInclude Include="Logger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

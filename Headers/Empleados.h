@@ -1,7 +1,6 @@
 #pragma once
 #include "comun.h"
 
-using namespace std;
 using namespace comunesNamespace;
 
 namespace empleadosNamespace
@@ -15,27 +14,20 @@ namespace empleadosNamespace
 
 
 	void crearEmpleados() {
-		try
-		{
-			string rutaArchivo = PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
 
-			FILE* empleados = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario/*wb+*/);
+		string rutaArchivo = PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
+		FILE* empleados = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario/*wb+*/);
 
-			Empleado vecE[4] = {
-				{ "EE", "Juan Gomez", 50 },
-				{ "AA", "Pablo Perez", 100 },
-				{ "ZZ", "Ariel Gimenez", 10 },
-				{ "NN", "Roberto Diaz", 200 }
-			};
+		Empleado vecE[4] = {
+			{ "EE", "Juan Gomez", 50 },
+			{ "AA", "Pablo Perez", 100 },
+			{ "ZZ", "Ariel Gimenez", 10 },
+			{ "NN", "Roberto Diaz", 200 }
+		};
 
-			fwrite(vecE, sizeof(Empleado), 4, empleados);
-			fclose(empleados);
+		fwrite(vecE, sizeof(Empleado), 4, empleados);
+		fclose(empleados);
 
-		}
-		catch (std::exception& ex)
-		{
-			cout << "ERROR\n\n" << ex.what() << endl;
-		}
 	}
 
 	void mostrarEmpleados() {
