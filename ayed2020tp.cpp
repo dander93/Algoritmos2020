@@ -10,9 +10,6 @@ using namespace ventasNamespace;
 using namespace LoggerHelper;
 
 void resolucionTp() {
-
-
-
 	//TODO completar aquí con la resolución del TP
 	// recordar usar la libreria string.h para el manejo de comparación y copia de valores de cadenas
 	// funciones útiles para usar: strcmp y stcpy
@@ -22,7 +19,7 @@ void resolucionTp() {
 }
 
 void setUpConfiguration() {
-	LOG_TCONSOLE_ENABLED = true;
+	LOG_TCONSOLE_ENABLED = false;
 	LOG_TOFILE_ENABLED = true;
 
 	PATH_LOGS_FOLDER = ".\\LOGS\\";
