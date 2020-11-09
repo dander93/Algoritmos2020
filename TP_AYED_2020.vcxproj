@@ -147,9 +147,9 @@
     <None Include="Documentacion\TP_AYED_2020.docx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Comun.h" />
+    <ClInclude Include="Headers\FilesHelper.h" />
     <ClInclude Include="Headers\Empleados.h" />
-    <ClInclude Include="Headers\Logger.h" />
+    <ClInclude Include="Headers\LoggerHelper.h" />
     <ClInclude Include="Headers\TimeHelper.h" />
     <ClInclude Include="Headers\Ventas.h" />
   </ItemGroup>

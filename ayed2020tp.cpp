@@ -1,7 +1,7 @@
-#include "Headers/Comun.h"
+#include "Headers/FilesHelper.h"
+#include "Headers/LoggerHelper.h"
 #include "Headers/Empleados.h"
 #include "Headers/Ventas.h"
-#include "Headers/Logger.h"
 
 using namespace std;
 using namespace FilesHelper;
@@ -22,7 +22,7 @@ void initProc() {
 
 	theLogs[0].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
 	theLogs[0].mensaje = "Inicio del programa";
-	//strcpy(theLogs[logLen].nivel, "INFO");
+	theLogs[logLen].nivel = LogLevels::INFO;
 	theLogs[0].origen = "Startup";
 
 	//creamos/comprobamos la carpeta de logueo

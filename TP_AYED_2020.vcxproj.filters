@@ -29,19 +29,19 @@
     <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Comun.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Empleados.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Ventas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Logger.h">
+    <ClInclude Include="Headers\TimeHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\TimeHelper.h">
+    <ClInclude Include="Headers\FilesHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\LoggerHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

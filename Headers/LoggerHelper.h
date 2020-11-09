@@ -1,6 +1,6 @@
 #pragma once
 #include <fstream>
-#include "Comun.h"
+#include "FilesHelper.h"
 #include "TimeHelper.h"
 
 using namespace std;
@@ -22,7 +22,7 @@ namespace LoggerHelper
 		FATAL
 	};
 
-	enum struct CustomConsoleColor {
+	enum struct ConsoleColors {
 		RESET,
 		BLACK,
 		RED,
@@ -61,41 +61,68 @@ namespace LoggerHelper
 		}
 	}
 
-	string getColor(CustomConsoleColor color) {
+	string getColor(ConsoleColors color) {
 		switch (color)
 		{
-			case CustomConsoleColor::CYAN: return "\033[36m";
-			case CustomConsoleColor::BLACK: return  "\033[30m";
-			case CustomConsoleColor::RED: return  "\033[31m";
-			case CustomConsoleColor::GREEN: return "\033[32m";
-			case CustomConsoleColor::YELLOW: return "\033[33m";
-			case CustomConsoleColor::BLUE: return "\033[34m";
-			case CustomConsoleColor::MAGENTA: return "\033[35m";
-			case CustomConsoleColor::WHITE: return  "\033[37m";
-			case CustomConsoleColor::BOLDBLACK: return "\033[1m\033[30m";
-			case CustomConsoleColor::BOLDRED: return "\033[1m\033[31m";
-			case CustomConsoleColor::BOLDGREEN: return "\033[1m\033[32m";
-			case CustomConsoleColor::BOLDYELLOW: return "\033[1m\033[33m";
-			case CustomConsoleColor::BOLDBLUE: return "\033[1m\033[34m";
-			case CustomConsoleColor::BOLDMAGENTA: return "\033[1m\033[35m";
-			case CustomConsoleColor::BOLDCYAN: return "\033[1m\033[36m";
-			case CustomConsoleColor::BOLDWHITE: return "\033[1m\033[37m";
+			case ConsoleColors::CYAN: return "\033[36m";
+			case ConsoleColors::BLACK: return  "\033[30m";
+			case ConsoleColors::RED: return  "\033[31m";
+			case ConsoleColors::GREEN: return "\033[32m";
+			case ConsoleColors::YELLOW: return "\033[33m";
+			case ConsoleColors::BLUE: return "\033[34m";
+			case ConsoleColors::MAGENTA: return "\033[35m";
+			case ConsoleColors::WHITE: return  "\033[37m";
+			case ConsoleColors::BOLDBLACK: return "\033[1m\033[30m";
+			case ConsoleColors::BOLDRED: return "\033[1m\033[31m";
+			case ConsoleColors::BOLDGREEN: return "\033[1m\033[32m";
+			case ConsoleColors::BOLDYELLOW: return "\033[1m\033[33m";
+			case ConsoleColors::BOLDBLUE: return "\033[1m\033[34m";
+			case ConsoleColors::BOLDMAGENTA: return "\033[1m\033[35m";
+			case ConsoleColors::BOLDCYAN: return "\033[1m\033[36m";
+			case ConsoleColors::BOLDWHITE: return "\033[1m\033[37m";
 
-			case CustomConsoleColor::RESET:
+			case ConsoleColors::RESET:
 			default: return "\033[0m";
 		}
 	}
 
-
-	string getLogString(LogEventType logEvent) {
+	string getLogString(LogEventType logEvent, bool isConsoleLog) {
 		//FECHA - NIVEL (ORIGEN) : MENSAJE
-		return logEvent.fecha + " - " + getLogLevel(logEvent.nivel) + " (" + logEvent.origen + ") : " + logEvent.mensaje;
+		string output = logEvent.fecha + " - ";;
+		if (isConsoleLog)
+		{
+
+			switch (logEvent.nivel)
+			{
+				case LogLevels::DEBUG:
+					output += getColor(ConsoleColors::GREEN);
+					break;
+				case LogLevels::INFO:
+					output += getColor(ConsoleColors::CYAN);
+					break;
+				case LogLevels::WARN:
+					output += getColor(ConsoleColors::YELLOW);
+					break;
+				case LogLevels::ERROR:
+				case LogLevels::FATAL:
+					output += getColor(ConsoleColors::RED);
+					break;
+			}
+			output += getLogLevel(logEvent.nivel) + getColor(ConsoleColors::RESET);
+		}
+		else
+		{
+			output += getLogLevel(logEvent.nivel);
+		}
+		output += " (" + logEvent.origen + ") : " + logEvent.mensaje;
+
+		return output;
 	}
 
 	void _logEvent(LogEventType theEvent) {
 		if (LOG_TCONSOLE_ENABLED)
 		{
-			cout << getLogString(theEvent) << endl;
+			cout << getLogString(theEvent, true) << endl;
 		}
 
 		if (LOG_TOFILE_ENABLED)
@@ -105,10 +132,9 @@ namespace LoggerHelper
 			* */
 			string rutaArchivo = PATH_LOGS_FOLDER + PATH_LOG_FILE;
 			ofstream file;
+			//seteo el output en el file stream y hago append al final con cada log
 			file.open(rutaArchivo, std::ios::app | std::ios::out);
-			//ofstream out();
-			//seteo el output stream en el archivo y hago con el ate y el in que se setee el cursos al final del archivo(con el ate) y que no se trunque(con el in)
-			file << getLogString(theEvent) << endl;
+			file << getLogString(theEvent, false) << endl;
 			file.close();
 			/*
 				FILE* logsFile = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escrituraAlFinal);
@@ -123,7 +149,7 @@ namespace LoggerHelper
 		{
 			for (int i = 0; i <= logLen; i++)
 			{
-				cout << getLogString(theLogs[i]) << endl;
+				cout << getLogString(theLogs[i], true) << endl;
 			}
 		}
 
@@ -134,13 +160,12 @@ namespace LoggerHelper
 			/*
 			* Lo hago así para que los logs sean un archivo plano legible
 			* */
-			//seteo el output stream en el archivo y hago con el ate y el in que se setee el cursos al final del archivo(con el ate) y que no se trunque(con el in)
-			//ofstream out(rutaArchivo, std::ios::ate | std::ios::out);
+			//seteo el output en el file stream y hago append al final con cada log
 			ofstream file;
 			file.open(rutaArchivo, std::ios::app | std::ios::out);
 			for (int i = 0; i <= logLen; i++)
 			{
-				file << getLogString(theLogs[i]) << endl;
+				file << getLogString(theLogs[i], false) << endl;
 			}
 
 			file.close();

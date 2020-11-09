@@ -8,7 +8,7 @@
 #include <string.h>
 #include <direct.h>
 #include <sys/stat.h>
-#include "Logger.h"
+#include "LoggerHelper.h"
 #include "TimeHelper.h"
 
 using namespace std;
@@ -53,7 +53,7 @@ namespace FilesHelper
 		logLen++;
 		theLogs[logLen].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
 		theLogs[logLen].mensaje = "Comprobando si la carpeta: " + path + " existe.";
-		theLogs[logLen].nivel = LogLevels::INFO;
+		theLogs[logLen].nivel = LogLevels::DEBUG;
 		theLogs[logLen].origen = "Startup";
 
 		struct stat st;
@@ -83,7 +83,7 @@ namespace FilesHelper
 		logLen++;
 		theLogs[logLen].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
 		theLogs[logLen].mensaje = "Creando carpeta: " + path + ".";
-		theLogs[logLen].nivel = LogLevels::INFO;
+		theLogs[logLen].nivel = LogLevels::DEBUG;
 		theLogs[logLen].origen = "Startup";
 
 		return _mkdir(path.c_str());
@@ -115,7 +115,7 @@ namespace FilesHelper
 		{
 			logLen++;
 			theLogs[logLen].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
-			theLogs[logLen].nivel = LogLevels::INFO;
+			theLogs[logLen].nivel = LogLevels::WARN;
 			theLogs[logLen].origen = "Startup";
 			theLogs[logLen].mensaje = "La carpeta: \"" + path + "\" no existia.";
 
@@ -125,7 +125,7 @@ namespace FilesHelper
 		{
 			logLen++;
 			theLogs[logLen].fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
-			theLogs[logLen].nivel = LogLevels::INFO;
+			theLogs[logLen].nivel = LogLevels::DEBUG;
 			theLogs[logLen].origen = "Startup";
 			theLogs[logLen].mensaje = "La carpeta: \"" + path + "\" existia.";
 		}
