@@ -131,8 +131,8 @@ namespace FilesHelper
 		}
 	}
 
-	const string PATH_DATA_FILES = ".\\DATA_FILES\\";
-	const string PATH_EMPLEADOS_DAT_FILE_NAME = "Empleados.dat";
-	const string PATH_VENTAS_DAT_FILE_NAME = "Ventas.dat";
+	string PATH_DATA_FILES = ".\\DATA_FILES\\";
+	string PATH_EMPLEADOS_DAT_FILE_NAME = "Empleados.dat";
+	string PATH_VENTAS_DAT_FILE_NAME = "Ventas.dat";
 }
 #endif //_COMMONS_

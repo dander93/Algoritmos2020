@@ -8,11 +8,14 @@ using namespace TimeHelper;
 
 namespace LoggerHelper
 {
-	const bool LOG_TCONSOLE_ENABLED = true;
-	const bool LOG_TOFILE_ENABLED = true;
+	/*
+	* No las hago constantes para poder ser modificados a gusto
+	* */
+	bool LOG_TCONSOLE_ENABLED = true;
+	bool LOG_TOFILE_ENABLED = true;
 
-	const string PATH_LOGS_FOLDER = ".\\LOGS\\";
-	const string PATH_LOG_FILE = "log" + getCurrentDateTime(TIPOS_FECHA.ddMMyyyy) + ".log";
+	string PATH_LOGS_FOLDER = ".\\LOGS\\";
+	string PATH_LOG_FILE = "log" + getCurrentDateTime(TIPOS_FECHA.ddMMyyyy) + ".log";
 
 	enum struct LogLevels {
 		DEBUG,
@@ -177,6 +180,15 @@ namespace LoggerHelper
 		}
 	}
 
+	void logDebug(string mensaje, string origen) {
+		LogEventType evento;
+		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
+		evento.nivel = LogLevels::DEBUG;
+		evento.origen = origen;
+		evento.mensaje = mensaje;
+		_logEvent(evento);
+	}
+
 	void logInfo(string mensaje, string origen) {
 		LogEventType evento;
 		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
@@ -199,6 +211,15 @@ namespace LoggerHelper
 		LogEventType evento;
 		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
 		evento.nivel = LogLevels::ERROR;
+		evento.origen = origen;
+		evento.mensaje = mensaje;
+		_logEvent(evento);
+	}
+
+	void logFatal(string mensaje, string origen) {
+		LogEventType evento;
+		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
+		evento.nivel = LogLevels::FATAL;
 		evento.origen = origen;
 		evento.mensaje = mensaje;
 		_logEvent(evento);

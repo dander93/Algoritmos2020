@@ -12,7 +12,6 @@ namespace empleadosNamespace
 		int cantProdVend;
 	};
 
-
 	void crearEmpleados() {
 
 		string rutaArchivo = PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
@@ -27,7 +26,6 @@ namespace empleadosNamespace
 
 		fwrite(vecE, sizeof(Empleado), 4, empleados);
 		fclose(empleados);
-
 	}
 
 	void mostrarEmpleados() {
