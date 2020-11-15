@@ -3,8 +3,10 @@
 #define _VENTAS_
 
 #include "FilesHelper.h"
+#include "ListHelper.h"
 
 using namespace FilesHelper;
+using namespace ListHelper;
 
 namespace ventasNamespace
 {
@@ -15,10 +17,13 @@ namespace ventasNamespace
 		float precioVenta;
 	};
 
-	struct nodoListaVenta {
-		Venta info;
-		nodoListaVenta* next;
-	};
+	/**
+	 * @brief Obtiene la ruta definida para el archivo de ventas
+	 * @return El string correspondiente a la ruta del archivo
+	*/
+	string getSalesDataFilePath() {
+		return PATH_DATA_FILES + PATH_VENTAS_DAT_FILE_NAME;
+	}
 
 	void crearVentas() {
 		string rutaArchivo = PATH_DATA_FILES + PATH_VENTAS_DAT_FILE_NAME;
@@ -43,8 +48,7 @@ namespace ventasNamespace
 	}
 
 	void mostrarVentas() {
-		string rutaArchivo = PATH_DATA_FILES + PATH_VENTAS_DAT_FILE_NAME;
-		FILE* ventas = fopen(rutaArchivo.c_str(), MODOS_APERTURA.lecturaYEscrituraBinario);
+		FILE* ventas = fopen(getSalesDataFilePath().c_str(), MODOS_APERTURA.lecturaYEscrituraBinario);
 
 		cout << "Codigo Empleado, Codigo Producto, Fecha, Precio de Venta" << endl;
 		Venta v;
@@ -60,7 +64,14 @@ namespace ventasNamespace
 		fclose(ventas);
 	}
 
-
-
+	/**
+	 * @deprecated La función fue substituida por una función anónima
+	 * @brief Función que muestra las ventas
+	 * @param root La raiz de la lista de ventas
+	*/
+	void criterioMostrarListaVentas(ListNode<Venta>*& root) {
+		Venta v = pop<Venta>(root);
+		cout << v.fecha << endl;
+	}
 }
 #endif

@@ -3,8 +3,12 @@
 #define _EMPLEADOS_
 
 #include "FilesHelper.h"
+#include "Ventas.h"
+#include "ListHelper.h"
 
 using namespace FilesHelper;
+using namespace ventasNamespace;
+using namespace ListHelper;
 
 namespace empleadosNamespace
 {
@@ -18,10 +22,12 @@ namespace empleadosNamespace
 		int cantProdVend;
 	};
 
-	void crearEmpleados() {
+	string getEmployeesDataFilePath() {
+		return PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
+	}
 
-		string rutaArchivo = PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
-		FILE* empleados = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario);
+	void crearEmpleados() {
+		FILE* empleados = fopen(getEmployeesDataFilePath().c_str(), MODOS_APERTURA.escribirCrearBinario);
 
 		Empleado vecE[4] = {
 			{ "EE", "Juan Gomez", 50 },
@@ -35,9 +41,7 @@ namespace empleadosNamespace
 	}
 
 	void mostrarEmpleados() {
-		string rutaArchivo = PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
-
-		FILE* empleados = fopen(rutaArchivo.c_str(), MODOS_APERTURA.lecturaYEscrituraBinario /*rb+*/);
+		FILE* empleados = fopen(getEmployeesDataFilePath().c_str(), MODOS_APERTURA.lecturaYEscrituraBinario);
 
 		cout << "Codigo Empleado, Nombre y Apellido, Cantidad de productos Vendidos" << endl;
 		Empleado e;
@@ -53,7 +57,43 @@ namespace empleadosNamespace
 		fclose(empleados);
 	}
 
+	/**
+	 * @brief Obtiene/devuelve (ya que los arrays se pasan por referencia siempre) el array de empleados
+	 * @param El array de empleados
+	*/
+	void getEmpleados(Empleado arrEmpleados[CANT_MAX_EMPLEADOS]) {
+		//obtenemos la ruta del archivo de empleados
+		string rutaArchivo = PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
 
+		FILE* empleados = fopen(rutaArchivo.c_str(), MODOS_APERTURA.lecturaYEscrituraBinario);
 
+		int arrCounter = 0;
+
+		Empleado e;
+		fread(&e, sizeof(Empleado), 1, empleados);
+		while (!feof(empleados))
+		{
+			arrEmpleados[arrCounter].cantProdVend = e.cantProdVend;
+			strcpy(arrEmpleados[arrCounter].codEmp, e.codEmp);
+			strcpy(arrEmpleados[arrCounter].nombYApe, e.nombYApe);
+			fread(&e, sizeof(Empleado), 1, empleados);
+			arrCounter++;
+		}
+		fclose(empleados);
+	}
+
+	/**
+	 * @brief Verifica si una venta corresponde a un empleado
+	 * @param codEmpleado El codigo del empleado
+	 * @param venta La venta
+	 * @return True/False corresponde la venta al empleado
+	*/
+	bool isEmployeeSale(char codEmpleado[], Venta venta) {
+		return (strcmp(codEmpleado, venta.codEmp) == 0);
+	}
+
+	void addEmployeeSale(ListNode<Venta>* node, Venta sale) {
+		//push<Venta>();
+	}
 }
 #endif

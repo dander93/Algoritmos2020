@@ -2,8 +2,14 @@
 #ifndef _LISTHELPER_
 #define _LISTHELPER_
 
+#include "Ventas.h"
+
 namespace ListHelper
 {
+	/*
+	* LIFO: LAST IN FIRST OUT
+	* El último en entrar es el primero en salir
+	* */
 
 	/**
 	 * @brief Tipo de nodo de lista
@@ -128,5 +134,57 @@ namespace ListHelper
 		}
 	}
 
+	/**
+	 * @brief Agrega al final de la lista un elemento
+	 * @tparam T El tipo de la lista
+	 * @param root La raiz de la lista
+	 * @param value El elemento a agregar al final de la lista
+	 * @return El puntero al nodo nuevo creado
+	*/
+	template <typename T>
+	ListNode<T>* addToList(ListNode<T>*& root, T value) {
+
+		//creo un nuevo nodo auxiliar
+		ListNode<T>* newPointer = new ListNode<T>();
+		//me guardo la información que viene en el nuevo nodo creado
+		newPointer->data = value;
+
+		//El guardo el puntero a la raiz en el nuevo nodo
+		ListNode<T>* auxRootPointer = root;
+		//Me creo un puntero auxiliar adicional para recorrer la lista
+		ListNode<T>* prevPointer = NULL;
+
+		//mientras la lista no esté vacía y no sea el final de la lista busco el siguiente elemento de la lista
+		while (auxRootPointer != NULL)
+		{
+			//El puntero auxiliar(previo) se convierte en la nueva raiz
+			prevPointer = auxRootPointer;
+			//El puntero auxiliar se convierte en el que le sigue en la lista
+			auxRootPointer = auxRootPointer->next;
+		}
+
+		//El nuevo puntero se convierte en el final de la lista
+		newPointer->next = auxRootPointer;
+		if (prevPointer == NULL)
+		{
+			//el nodo a enlazar va a quedar primero en la lista
+			root = newPointer;
+		}
+		else
+		{
+			prevPointer->next = newPointer;
+		}
+
+		return newPointer;
+	}
+
+
+	template <typename T>
+	void printList(ListNode<T>* root, void(*howPrint)(ListNode<T>*& root)) {
+		while (!listIsEmpty(root))
+		{
+			howPrint(root);
+		}
+	}
 }
 #endif

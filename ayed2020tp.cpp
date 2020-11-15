@@ -2,29 +2,105 @@
 #include "Headers/LoggerHelper.h"
 #include "Headers/Empleados.h"
 #include "Headers/Ventas.h"
+#include "Headers/ListHelper.h"
 
 using namespace std;
 using namespace FilesHelper;
 using namespace LoggerHelper;
 using namespace empleadosNamespace;
 using namespace ventasNamespace;
-
+using namespace ListHelper;
 
 struct reporteVentaEmpleados {
 	Empleado empleado;
 	unsigned long totalProductosVendidos;
 	float totalRecaudado;
+	ListNode<Venta>* productosVendidos;
 };
+
+/**
+ * @brief Genera los reportes para cada empleado
+ * @param reportesEmpleados La lista de reportes a devolver
+ * @param lenEmpleados La cantidad de empleados ingresados
+*/
+void generarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
+	FILE* salesFileStream = fopen(getSalesDataFilePath().c_str(), MODOS_APERTURA.lecturaYEscrituraBinario);
+
+	Empleado empleados[CANT_MAX_EMPLEADOS];
+	getEmpleados(empleados);
+
+	for (int i = 0; i < lenEmpleados; i++)
+	{
+		reportesEmpleados[i].empleado = empleados[i];
+		reportesEmpleados[i].totalProductosVendidos = empleados[i].cantProdVend;
+		reportesEmpleados[i].totalRecaudado = 0;
+
+		initList(reportesEmpleados[i].productosVendidos);
+
+		Venta venta;
+		fread(&venta, sizeof(Venta), 1, salesFileStream);
+		while (!feof(salesFileStream))
+		{
+			if (isEmployeeSale(empleados[i].codEmp, venta))
+			{
+
+				/*
+				TODO: HAY QUE REVISAR EL ADDTOLIST QUE FUNCIONA MAL
+				*/
+				reportesEmpleados[i].productosVendidos = addToList(reportesEmpleados[i].productosVendidos, venta);
+				reportesEmpleados[i].totalRecaudado += venta.precioVenta;
+				reportesEmpleados[i].totalProductosVendidos++;
+			}
+
+			fread(&venta, sizeof(Venta), 1, salesFileStream);
+		}
+
+		setAtFileStart(salesFileStream);
+	}
+
+	fclose(salesFileStream);
+}
+
+
+
+/**
+ * @brief Muestra los reportes generados
+ * @param reportesEmpleados El array de reportes
+ * @param lenEmpleados La cantidad de empleados ingresados
+*/
+void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
+	for (int i = 0; i < lenEmpleados; i++)
+	{
+		cout << "Codigo de empleado: " << reportesEmpleados[i].empleado.codEmp << endl;
+		cout << "Nombre y apellido: " << reportesEmpleados[i].empleado.nombYApe << endl;
+		cout << "Total de productos vendidos: " << reportesEmpleados[i].totalProductosVendidos << endl;
+		cout << "Total recaudado: $" << reportesEmpleados[i].totalRecaudado << endl << endl;
+		cout << "Productos Vendidos:" << endl;
+		
+		cout << "Codigo Producto" << " | " << "Fecha" << endl;
+
+		//utilizo una función anónima para mostrar la lista de ventas
+		printList<Venta>(reportesEmpleados[i].productosVendidos->next, [](ListNode<Venta>*& root)
+			{
+				Venta venta = pop<Venta>(root);
+				cout << venta.codProd << " | " << venta.fecha << endl;
+			});
+		cout << endl << endl;
+	}
+}
 
 
 void resolucionTp() {
-
 	//TODO completar aquí con la resolución del TP
 	// recordar usar la libreria string.h para el manejo de comparación y copia de valores de cadenas
 	// funciones útiles para usar: strcmp y stcpy
 
+	const int lenEmpleados = 4;
 
+	reporteVentaEmpleados reportesEmpleados[CANT_MAX_EMPLEADOS];
+	generarReportes(reportesEmpleados, lenEmpleados);
 
+	mostrarReportes(reportesEmpleados, lenEmpleados);
 }
 
 void setUpEnvironment() {
@@ -77,7 +153,7 @@ int main() {
 	logInfo("fin de la resolucion del TP", "main");
 
 	logInfo("Fin del programa", "main");
-	
+
 	//vale 0 y está definido en el header de stdlib
 	return EXIT_SUCCESS;
 }

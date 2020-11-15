@@ -131,6 +131,14 @@ namespace FilesHelper
 		}
 	}
 
+	/**
+	 * @brief Devuelve el indicador de posición de lectura al inicio del archivo
+	 * @param fileStream El stream del archivo
+	*/
+	void setAtFileStart(FILE* fileStream){
+		fseek(fileStream, 0, SEEK_SET);
+	}
+
 	/*
 	* Esto está al final para un correcto funcionamiento, seguramente se pueda poner al inicio también pero implica pensar nuevamente la arquitectura actual
 	* */
