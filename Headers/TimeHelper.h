@@ -1,4 +1,7 @@
 #pragma once
+#ifndef _TIMEHELPER_
+#define _TIMEHELPER_
+
 #include <string>
 #include <ctime>
 
@@ -6,7 +9,10 @@ using namespace std;
 
 namespace TimeHelper
 {
-	//Estructura para los tipos de fecha predefinidos
+
+	/**
+	 * @brief Estructura para imprimir los tipos de fecha
+	*/
 	const struct dateTimeFormats {
 		//Formato dd/MM/yyyy HH:mm:ss - Ej: 07/11/2020 22:48:32
 		const string ddMMyyyyHHmmssSlayed = "%d/%m/%Y %X";
@@ -28,12 +34,11 @@ namespace TimeHelper
 		const string MonthName = "%B";
 	} TIPOS_FECHA;
 
-	/*
-	 * Obtiene la fecha y/o hora actuales.
-	 *
-	 * @param formato: El formato de la fecha esperada.
-	 * @return La fecha según el formato requerido.
-	 */
+	/**
+	 * @brief Obtiene la fecha y/o hora actuales
+	 * @param Formato El formato de la fecha esperada(de la estructura estática TIPOS_FECHA)
+	 * @return El string con el horario/fecha solicitados
+	*/
 	string getCurrentDateTime(string formato) {
 		time_t now = time(0);
 		struct tm timeStruct;
@@ -45,3 +50,5 @@ namespace TimeHelper
 		return timeBuffer;
 	}
 }
+
+#endif

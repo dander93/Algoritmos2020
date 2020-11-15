@@ -1,4 +1,7 @@
 #pragma once
+#ifndef _LOGGERHELPER_
+#define _LOGGERHELPER_
+
 #include <fstream>
 #include "FilesHelper.h"
 #include "TimeHelper.h"
@@ -11,12 +14,19 @@ namespace LoggerHelper
 	/*
 	* No las hago constantes para poder ser modificados a gusto
 	* */
+	//Variable que controla si debe loguearse a consola, True por default
 	bool LOG_TCONSOLE_ENABLED = true;
+	//Variable que controla si debe loguearse a archivo, True por default
 	bool LOG_TOFILE_ENABLED = true;
 
+	//Variable que controla la ruta donde se escribirán los logs
 	string PATH_LOGS_FOLDER = ".\\LOGS\\";
+	//Variable que controla el nombre del archivo de logueo
 	string PATH_LOG_FILE = "log" + getCurrentDateTime(TIPOS_FECHA.ddMMyyyy) + ".log";
 
+	/**
+	 * @brief Enumeración de niveles de logueo
+	*/
 	enum struct LogLevels {
 		DEBUG,
 		INFO,
@@ -25,6 +35,9 @@ namespace LoggerHelper
 		FATAL
 	};
 
+	/**
+	 * @brief Enumeración de colores para utilizar en la consola
+	*/
 	enum struct ConsoleColors {
 		RESET,
 		BLACK,
@@ -45,7 +58,9 @@ namespace LoggerHelper
 		BOLDWHITE
 	};
 
-	//estructura de logs
+	/**
+	 * @brief Estructura de registro para logueo
+	*/
 	struct LogEventType {
 		string fecha;
 		LogLevels nivel;
@@ -53,6 +68,11 @@ namespace LoggerHelper
 		string mensaje;
 	};
 
+	/**
+	 * @brief Obtiene el nivel de log en formato string
+	 * @param nivel El nivel de log buscado
+	 * @return EL texto correspondiente al nivel de logueo
+	*/
 	string getLogLevel(LogLevels nivel) {
 		switch (nivel)
 		{
@@ -64,6 +84,11 @@ namespace LoggerHelper
 		}
 	}
 
+	/**
+	 * @brief Según un color de la enumeración de colores devuelve una secuencia de caractéres para imprimirlo por consola
+	 * @param color El color para obtener el string necesario para imprimirlo por consola
+	 * @return El string necesario para imprimir con ese color en la consola
+	*/
 	string getColor(ConsoleColors color) {
 		switch (color)
 		{
@@ -89,6 +114,12 @@ namespace LoggerHelper
 		}
 	}
 
+	/**
+	 * @brief Formatea para archivo o consola un registro de log y lo devuelve en string
+	 * @param logEvent El registro de log
+	 * @param isConsoleLog Si es un log para consola (para imprimirlo con su color correspondiente) o para archivo
+	 * @return El registro formateado y completo para su correcta visualización
+	*/
 	string getLogString(LogEventType logEvent, bool isConsoleLog) {
 		//FECHA - NIVEL (ORIGEN) : MENSAJE
 		string output = logEvent.fecha + " - ";;
@@ -122,6 +153,10 @@ namespace LoggerHelper
 		return output;
 	}
 
+	/**
+	 * @brief Imprime a consola o archivo un registro de logueo
+	 * @param theEvent El registro de log
+	*/
 	void _logEvent(LogEventType theEvent) {
 		if (LOG_TCONSOLE_ENABLED)
 		{
@@ -147,6 +182,11 @@ namespace LoggerHelper
 		}
 	}
 
+	/**
+	 * @brief Loguea a consola/archivo los logs de la secuencia de inicio (cuando todavía no se había configurado ni verificado la carpeta y demás configuraciones)
+	 * @param theLogs El array de logs
+	 * @param logLen El largo del array de logs
+	*/
 	void logInitEvents(LogEventType theLogs[], int logLen) {
 		if (LOG_TCONSOLE_ENABLED)
 		{
@@ -180,6 +220,11 @@ namespace LoggerHelper
 		}
 	}
 
+	/**
+	 * @brief Loguea un evento de tipo DEBUG
+	 * @param mensaje El mensaje a loguear
+	 * @param origen El origen del mensaje
+	*/
 	void logDebug(string mensaje, string origen) {
 		LogEventType evento;
 		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
@@ -189,6 +234,11 @@ namespace LoggerHelper
 		_logEvent(evento);
 	}
 
+	/**
+	 * @brief Loguea un evento de tipo INFO
+	 * @param mensaje El mensaje a loguear
+	 * @param origen El origen del mensaje
+	*/
 	void logInfo(string mensaje, string origen) {
 		LogEventType evento;
 		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
@@ -198,6 +248,11 @@ namespace LoggerHelper
 		_logEvent(evento);
 	}
 
+	/**
+	 * @brief Loguea un evento de tipo WARNING
+	 * @param mensaje El mensaje a loguear
+	 * @param origen El origen del mensaje
+	*/
 	void logWarn(string mensaje, string origen) {
 		LogEventType evento;
 		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
@@ -207,6 +262,11 @@ namespace LoggerHelper
 		_logEvent(evento);
 	}
 
+	/**
+	 * @brief Loguea un evento de tipo ERROR
+	 * @param mensaje El mensaje a loguear
+	 * @param origen El origen del mensaje
+	*/
 	void logError(string mensaje, string origen) {
 		LogEventType evento;
 		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
@@ -216,6 +276,11 @@ namespace LoggerHelper
 		_logEvent(evento);
 	}
 
+	/**
+	 * @brief Loguea un evento de tipo FATAL
+	 * @param mensaje El mensaje a loguear
+	 * @param origen El origen del mensaje
+	*/
 	void logFatal(string mensaje, string origen) {
 		LogEventType evento;
 		evento.fecha = getCurrentDateTime(TIPOS_FECHA.ddMMyyyyHHmmssSlayed);
@@ -225,3 +290,4 @@ namespace LoggerHelper
 		_logEvent(evento);
 	}
 }
+#endif

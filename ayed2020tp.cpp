@@ -5,11 +5,20 @@
 
 using namespace std;
 using namespace FilesHelper;
+using namespace LoggerHelper;
 using namespace empleadosNamespace;
 using namespace ventasNamespace;
-using namespace LoggerHelper;
+
+
+struct reporteVentaEmpleados {
+	Empleado empleado;
+	unsigned long totalProductosVendidos;
+	float totalRecaudado;
+};
+
 
 void resolucionTp() {
+
 	//TODO completar aquí con la resolución del TP
 	// recordar usar la libreria string.h para el manejo de comparación y copia de valores de cadenas
 	// funciones útiles para usar: strcmp y stcpy
@@ -18,7 +27,11 @@ void resolucionTp() {
 
 }
 
-void setUpConfiguration() {
+void setUpEnvironment() {
+
+	/*
+	* ¿Hacer un archivo de config plano .cfg? ¿Un appsettings .xml? ¿Un appsettings .json?
+	* */
 	LOG_TCONSOLE_ENABLED = false;
 	LOG_TOFILE_ENABLED = true;
 
@@ -39,7 +52,7 @@ void initProc() {
 	theLogs[logLen].nivel = LogLevels::INFO;
 	theLogs[0].origen = "main";
 
-	setUpConfiguration();
+	setUpEnvironment();
 
 	createFolderIfNoExist(PATH_LOGS_FOLDER, theLogs, logLen);
 	createFolderIfNoExist(PATH_DATA_FILES, theLogs, logLen);
@@ -64,7 +77,7 @@ int main() {
 	logInfo("fin de la resolucion del TP", "main");
 
 	logInfo("Fin del programa", "main");
-
-
+	
+	//vale 0 y está definido en el header de stdlib
 	return EXIT_SUCCESS;
 }

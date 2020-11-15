@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _VENTAS_
+#define _VENTAS_
 
 #include "FilesHelper.h"
 
@@ -6,7 +8,6 @@ using namespace FilesHelper;
 
 namespace ventasNamespace
 {
-
 	struct Venta {
 		char codEmp[9 + 1];
 		int codProd;
@@ -14,9 +15,14 @@ namespace ventasNamespace
 		float precioVenta;
 	};
 
+	struct nodoListaVenta {
+		Venta info;
+		nodoListaVenta* next;
+	};
+
 	void crearVentas() {
 		string rutaArchivo = PATH_DATA_FILES + PATH_VENTAS_DAT_FILE_NAME;
-		FILE* ventas = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario /*wb+*/);
+		FILE* ventas = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario);
 
 		Venta vecV[11] = {
 			{ "EE", 1, 20141001, 40.0 },
@@ -38,7 +44,7 @@ namespace ventasNamespace
 
 	void mostrarVentas() {
 		string rutaArchivo = PATH_DATA_FILES + PATH_VENTAS_DAT_FILE_NAME;
-		FILE* ventas = fopen(rutaArchivo.c_str(), MODOS_APERTURA.lecturaYEscrituraBinario/*rb+*/);
+		FILE* ventas = fopen(rutaArchivo.c_str(), MODOS_APERTURA.lecturaYEscrituraBinario);
 
 		cout << "Codigo Empleado, Codigo Producto, Fecha, Precio de Venta" << endl;
 		Venta v;
@@ -53,4 +59,8 @@ namespace ventasNamespace
 		cout << endl;
 		fclose(ventas);
 	}
+
+
+
 }
+#endif

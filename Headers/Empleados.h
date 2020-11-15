@@ -1,11 +1,17 @@
 #pragma once
+#ifndef _EMPLEADOS_
+#define _EMPLEADOS_
+
 #include "FilesHelper.h"
 
 using namespace FilesHelper;
 
 namespace empleadosNamespace
 {
+	//Cantidad límite de empleados posibles en el archivo de empleados
+	const unsigned int CANT_MAX_EMPLEADOS = 50;
 
+	//Estructura para tipo de dato de los empleados
 	struct Empleado {
 		char codEmp[9 + 1];
 		char nombYApe[50 + 1];
@@ -15,7 +21,7 @@ namespace empleadosNamespace
 	void crearEmpleados() {
 
 		string rutaArchivo = PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
-		FILE* empleados = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario/*wb+*/);
+		FILE* empleados = fopen(rutaArchivo.c_str(), MODOS_APERTURA.escribirCrearBinario);
 
 		Empleado vecE[4] = {
 			{ "EE", "Juan Gomez", 50 },
@@ -46,4 +52,8 @@ namespace empleadosNamespace
 		cout << endl;
 		fclose(empleados);
 	}
+
+
+
 }
+#endif
