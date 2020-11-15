@@ -61,18 +61,19 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 		cout << getColor(ConsoleColors::GREEN) << "Codigo de empleado: " << getColor(ConsoleColors::RESET) << reportesEmpleados[i].empleado.codEmp << endl;
 		cout << getColor(ConsoleColors::GREEN) << "Nombre y apellido: " << getColor(ConsoleColors::RESET) << reportesEmpleados[i].empleado.nombYApe << endl;
 		cout << getColor(ConsoleColors::GREEN) << "Total de productos vendidos: " << getColor(ConsoleColors::RESET) << reportesEmpleados[i].totalProductosVendidos << endl;
-		cout << getColor(ConsoleColors::GREEN) << "Total recaudado: " << getColor(ConsoleColors::RESET) << "$" << reportesEmpleados[i].totalRecaudado << endl << endl;
-		cout << getColor(ConsoleColors::UNDERLINEDCYAN) << "Productos Vendidos" << getColor(ConsoleColors::RESET) << endl;
+		cout << getColor(ConsoleColors::GREEN) << "Total recaudado: " << getColor(ConsoleColors::RESET) << "$" << reportesEmpleados[i].totalRecaudado << endl;
+		cout << "   " << getColor(ConsoleColors::UNDERLINEDCYAN) << "Productos Vendidos" << getColor(ConsoleColors::RESET) << endl;
 		if (reportesEmpleados[i].productosVendidos != NULL)
 		{
-			cout << "Codigo Producto" << " | " << "Fecha" << endl;
+			cout << "|" << getColor(ConsoleColors::UNDERLINEDWHITE) << "Codigo Producto" << " | " << " Fecha  " << getColor(ConsoleColors::RESET) << "|" << endl;
 
 			//utilizo una función anónima para mostrar la lista de ventas
 			printList<Venta>(reportesEmpleados[i].productosVendidos, [](ListNode<Venta>*& root)
 				{
 					Venta venta = pop<Venta>(root);
-					cout << venta.codProd << "\t\t| " << venta.fecha << endl;
+					cout << "|" << venta.codProd << "\t\t |" << venta.fecha << " |" << endl;
 				});
+			cout << "|" << getColor(ConsoleColors::UNDERLINEDWHITE) << "                |         " << getColor(ConsoleColors::RESET) << "|" << endl;
 		}
 		else
 		{
@@ -84,6 +85,16 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 
 void ordenarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
 	orderEmployees(reportesEmpleados, lenEmpleados);
+	for (int empleadoSeleccionado = 0; empleadoSeleccionado < lenEmpleados; empleadoSeleccionado++)
+	{
+		/*
+		orderList(reportesEmpleados[empleadoSeleccionado].productosVendidos, []()
+			{
+				return 0;
+			});
+		*/
+	}
+
 }
 
 void resolucionTp() {
