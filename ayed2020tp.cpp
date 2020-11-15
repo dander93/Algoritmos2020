@@ -77,7 +77,7 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 		}
 		else
 		{
-			cout << "No se encontraron";
+			cout << "   No se encontraron productos";
 		}
 		cout << endl << endl;
 	}
