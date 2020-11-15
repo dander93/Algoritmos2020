@@ -25,7 +25,7 @@ namespace empleadosNamespace
 		char nombYApe[50 + 1];
 		int cantProdVend;
 	};
-	
+
 	/**
 	 * @brief Estructura para el tipodo de dato de los reportes
 	*/
@@ -110,8 +110,35 @@ namespace empleadosNamespace
 		return (strcmp(codEmpleado, venta.codEmp) == 0);
 	}
 
+	/**
+	 * @deprecated
+	 * @brief
+	 * @param node
+	 * @param sale
+	*/
 	void addEmployeeSale(ListNode<Venta>* node, Venta sale) {
 		//push<Venta>();
 	}
+
+	/**
+	 * @brief Ordena los reportes de los empleados
+	 * @param reportesEmpleados El array de reportes
+	 * @param lenEmpleados La cantidad útil de empleados
+	*/
+	void orderEmployees(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
+		for (int j = 1; j <= lenEmpleados - 1; j = j + 1)
+		{
+			for (int i = 0; i <= lenEmpleados - 1 - 1; i = i + 1)
+			{
+				if (reportesEmpleados[i].totalRecaudado < reportesEmpleados[i + 1].totalRecaudado)
+				{
+					reporteVentaEmpleados aux = reportesEmpleados[i];
+					reportesEmpleados[i] = reportesEmpleados[i + 1];
+					reportesEmpleados[i + 1] = aux;
+				}
+			}
+		}
+	}
+
 }
 #endif

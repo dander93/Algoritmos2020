@@ -50,8 +50,6 @@ void generarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 	fclose(salesFileStream);
 }
 
-
-
 /**
  * @brief Muestra los reportes generados
  * @param reportesEmpleados El array de reportes
@@ -84,6 +82,9 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 	}
 }
 
+void ordenarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
+	orderEmployees(reportesEmpleados, lenEmpleados);
+}
 
 void resolucionTp() {
 	//TODO completar aquí con la resolución del TP
@@ -94,6 +95,8 @@ void resolucionTp() {
 
 	reporteVentaEmpleados reportesEmpleados[CANT_MAX_EMPLEADOS];
 	generarReportes(reportesEmpleados, lenEmpleados);
+
+	ordenarReportes(reportesEmpleados, lenEmpleados);
 
 	mostrarReportes(reportesEmpleados, lenEmpleados);
 }
