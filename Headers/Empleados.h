@@ -12,16 +12,34 @@ using namespace ListHelper;
 
 namespace empleadosNamespace
 {
-	//Cantidad límite de empleados posibles en el archivo de empleados
+	/**
+	 * @brief Cantidad límite de empleados posibles en el archivo
+	*/
 	const unsigned int CANT_MAX_EMPLEADOS = 50;
 
-	//Estructura para tipo de dato de los empleados
+	/**
+	 * @brief Estructura del tipo empleado
+	*/
 	struct Empleado {
 		char codEmp[9 + 1];
 		char nombYApe[50 + 1];
 		int cantProdVend;
 	};
+	
+	/**
+	 * @brief Estructura para el tipodo de dato de los reportes
+	*/
+	struct reporteVentaEmpleados {
+		Empleado empleado;
+		unsigned long totalProductosVendidos;
+		float totalRecaudado;
+		ListNode<Venta>* productosVendidos;
+	};
 
+	/**
+	 * @brief Obtiene la ruta del archivo de ventas
+	 * @return La ruta del archivo
+	*/
 	string getEmployeesDataFilePath() {
 		return PATH_DATA_FILES + PATH_EMPLEADOS_DAT_FILE_NAME;
 	}

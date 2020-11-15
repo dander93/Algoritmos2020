@@ -17,7 +17,9 @@ using namespace TimeHelper;
 
 namespace FilesHelper
 {
-	//Estructura con los tipos de lectura para archivos predefinidos
+	/**
+	 * @brief Estructura con los tipos de lectura para archivos predefinidos
+	*/
 	const struct fileOpenTypeCommons {
 		//MODO: r
 		const char* lectura = "r";
@@ -140,14 +142,23 @@ namespace FilesHelper
 	}
 
 	/*
-	* Esto está al final para un correcto funcionamiento, seguramente se pueda poner al inicio también pero implica pensar nuevamente la arquitectura actual
+	* Esto está al final para un correcto funcionamiento, 
+	*	seguramente se pueda poner al inicio también pero implica pensar nuevamente la arquitectura actual
 	* */
 
-	//La ruta donde se van a ecribir los archivos .dat
+	/**
+	 * @brief La ruta donde se van a ecribir los archivos .dat
+	*/
 	string PATH_DATA_FILES = ".\\DATA_FILES\\";
-	//El nombre del archivo .dat para empleados
+
+	/**
+	 * @brief El nombre del archivo .dat para empleados
+	*/
 	string PATH_EMPLEADOS_DAT_FILE_NAME = "Empleados.dat";
-	//EL nombre del archivo .dat para ventas
+
+	/**
+	 * @brief El nombre del archivo .dat para ventas
+	*/
 	string PATH_VENTAS_DAT_FILE_NAME = "Ventas.dat";
 }
 #endif //_COMMONS_

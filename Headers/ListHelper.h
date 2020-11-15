@@ -6,11 +6,6 @@
 
 namespace ListHelper
 {
-	/*
-	* LIFO: LAST IN FIRST OUT
-	* El último en entrar es el primero en salir
-	* */
-
 	/**
 	 * @brief Tipo de nodo de lista
 	 * @tparam T El tipo de lista
@@ -178,12 +173,71 @@ namespace ListHelper
 		return newPointer;
 	}
 
-
+	/**
+	 * @brief Inserta de forma ordenada en la lista
+	 * @tparam T El tipo de la lista
+	 * @param root La raiz de la lista
+	 * @param value El valor a insertar
+	 * @param criteria El criterio de ordenación
+	 * @return El nuevo puntero a la lista
+	*/
 	template <typename T>
-	void printList(ListNode<T>* root, void(*howPrint)(ListNode<T>*& root)) {
+	ListNode<T>* orderedAddToList(ListNode<T>*& root, T value, int (*criteria)(T, T)) {
+		ListNode<T>* newRoot = new ListNode<T>();
+		newRoot->data = value;
+
+		ListNode<T>* auxRoot = root;
+		ListNode<T>* prevRoot = NULL;
+		while (auxRoot != NULL && criteria(auxRoot->data, value) < 0)
+		{
+			prevRoot = auxRoot;
+			auxRoot = auxRoot->next;
+		}
+
+		newRoot->next = auxRoot;
+		if (prevRoot == NULL)
+		{
+			root = newRoot;
+		}
+		else
+		{
+			prevRoot->next = newRoot;
+		}
+
+		return newRoot;
+	}
+
+	/**
+	 * @brief Ordena una lista
+	 * @tparam T El tipo de la lista
+	 * @param root La raiz de la lista
+	 * @param criteria El criterio de ordenación
+	*/
+	template <typename T>
+	void orderList(ListNode<T>*& root, int (*criteria)(T, T)) {
+		ListNode<T>* auxRoot;
+		initList<T>(auxRoot);
+
+		while (!listIsEmpty<T>(root))
+		{
+			T data = pop<T>(root);
+			orderedAddToList<T>(auxRoot, data, criteria);
+		}
+
+		root = auxRoot;
+	}
+
+	/**
+	 * @brief Imprime la lista de la forma pasada por parámetro en howPrint
+	 * @tparam T El tipo de la lista
+	 * @param root La raiz de la lista
+	 * @param howPrint La forma en la que se va a imprimir la lista
+	*/
+	template <typename T>
+	void printList(ListNode<T>* root, void(*howToPrint)(ListNode<T>*& root)) {
 		while (!listIsEmpty(root))
 		{
-			howPrint(root);
+			howToPrint(root);
 		}
 	}
 }

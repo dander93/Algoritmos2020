@@ -11,13 +11,6 @@ using namespace empleadosNamespace;
 using namespace ventasNamespace;
 using namespace ListHelper;
 
-struct reporteVentaEmpleados {
-	Empleado empleado;
-	unsigned long totalProductosVendidos;
-	float totalRecaudado;
-	ListNode<Venta>* productosVendidos;
-};
-
 /**
  * @brief Genera los reportes para cada empleado
  * @param reportesEmpleados La lista de reportes a devolver
@@ -67,20 +60,26 @@ void generarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
 	for (int i = 0; i < lenEmpleados; i++)
 	{
-		cout << "Codigo de empleado: " << reportesEmpleados[i].empleado.codEmp << endl;
-		cout << "Nombre y apellido: " << reportesEmpleados[i].empleado.nombYApe << endl;
-		cout << "Total de productos vendidos: " << reportesEmpleados[i].totalProductosVendidos << endl;
-		cout << "Total recaudado: $" << reportesEmpleados[i].totalRecaudado << endl;
-		cout << "Productos Vendidos:" << endl;
-		cout << "Codigo Producto" << " | " << "Fecha" << endl;
+		cout << getColor(ConsoleColors::GREEN) << "Codigo de empleado: " << getColor(ConsoleColors::RESET) << reportesEmpleados[i].empleado.codEmp << endl;
+		cout << getColor(ConsoleColors::GREEN) << "Nombre y apellido: " << getColor(ConsoleColors::RESET) << reportesEmpleados[i].empleado.nombYApe << endl;
+		cout << getColor(ConsoleColors::GREEN) << "Total de productos vendidos: " << getColor(ConsoleColors::RESET) << reportesEmpleados[i].totalProductosVendidos << endl;
+		cout << getColor(ConsoleColors::GREEN) << "Total recaudado: " << getColor(ConsoleColors::RESET) << "$" << reportesEmpleados[i].totalRecaudado << endl << endl;
+		cout << getColor(ConsoleColors::UNDERLINEDCYAN) << "Productos Vendidos" << getColor(ConsoleColors::RESET) << endl;
+		if (reportesEmpleados[i].productosVendidos != NULL)
+		{
+			cout << "Codigo Producto" << " | " << "Fecha" << endl;
 
-		//utilizo una función anónima para mostrar la lista de ventas
-		printList<Venta>(reportesEmpleados[i].productosVendidos, [](ListNode<Venta>*& root)
-			{
-				Venta venta = pop<Venta>(root);
-				cout << venta.codProd << " | " << venta.fecha << endl;
-			});
-
+			//utilizo una función anónima para mostrar la lista de ventas
+			printList<Venta>(reportesEmpleados[i].productosVendidos, [](ListNode<Venta>*& root)
+				{
+					Venta venta = pop<Venta>(root);
+					cout << venta.codProd << "\t\t| " << venta.fecha << endl;
+				});
+		}
+		else
+		{
+			cout << "No se encontraron";
+		}
 		cout << endl << endl;
 	}
 }
@@ -136,12 +135,12 @@ int main() {
 	initProc();
 	logInfo("Inicio del proceso de empleados", "main");
 	crearEmpleados();
-	mostrarEmpleados();
+	//mostrarEmpleados();
 	logInfo("Fin proceso de empleados", "main");
 
 	logInfo("Inicio del proceso de ventas", "main");
 	crearVentas();
-	mostrarVentas();
+	//mostrarVentas();
 	logInfo("Fin proceso de ventas", "main");
 
 	logInfo("Inicio de la resolucion del TP", "main");

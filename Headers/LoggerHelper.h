@@ -14,14 +14,25 @@ namespace LoggerHelper
 	/*
 	* No las hago constantes para poder ser modificados a gusto
 	* */
-	//Variable que controla si debe loguearse a consola, True por default
+
+	/**
+	 * @brief Variable que controla si debe loguearse a consola, True por default
+	*/
 	bool LOG_TCONSOLE_ENABLED = true;
-	//Variable que controla si debe loguearse a archivo, True por default
+
+	/**
+	 * @brief Variable que controla si debe loguearse a archivo, True por default
+	*/
 	bool LOG_TOFILE_ENABLED = true;
 
-	//Variable que controla la ruta donde se escribirán los logs
+	/**
+	 * @brief Variable que controla la ruta donde se escribirán los logs
+	*/
 	string PATH_LOGS_FOLDER = ".\\LOGS\\";
-	//Variable que controla el nombre del archivo de logueo
+
+	/**
+	 * @brief Variable que controla el nombre del archivo de logueo
+	*/
 	string PATH_LOG_FILE = "log" + getCurrentDateTime(TIPOS_FECHA.ddMMyyyy) + ".log";
 
 	/**
@@ -55,7 +66,9 @@ namespace LoggerHelper
 		BOLDBLUE,
 		BOLDMAGENTA,
 		BOLDCYAN,
-		BOLDWHITE
+		BOLDWHITE,
+		UNDERLINEDWHITE,
+		UNDERLINEDCYAN
 	};
 
 	/**
@@ -100,14 +113,16 @@ namespace LoggerHelper
 			case ConsoleColors::BLUE: return "\033[34m";
 			case ConsoleColors::MAGENTA: return "\033[35m";
 			case ConsoleColors::WHITE: return  "\033[37m";
-			case ConsoleColors::BOLDBLACK: return "\033[1m\033[30m";
-			case ConsoleColors::BOLDRED: return "\033[1m\033[31m";
-			case ConsoleColors::BOLDGREEN: return "\033[1m\033[32m";
-			case ConsoleColors::BOLDYELLOW: return "\033[1m\033[33m";
-			case ConsoleColors::BOLDBLUE: return "\033[1m\033[34m";
-			case ConsoleColors::BOLDMAGENTA: return "\033[1m\033[35m";
-			case ConsoleColors::BOLDCYAN: return "\033[1m\033[36m";
-			case ConsoleColors::BOLDWHITE: return "\033[1m\033[37m";
+			case ConsoleColors::BOLDBLACK: return "\033[1;30m";
+			case ConsoleColors::BOLDRED: return "\033[1m;31m";
+			case ConsoleColors::BOLDGREEN: return "\033[1;32m";
+			case ConsoleColors::BOLDYELLOW: return "\033[1;33m";
+			case ConsoleColors::BOLDBLUE: return "\033[1;34m";
+			case ConsoleColors::BOLDMAGENTA: return "\033[1;35m";
+			case ConsoleColors::BOLDCYAN: return "\033[1;36m";
+			case ConsoleColors::BOLDWHITE: return "\033[1;37m";
+			case ConsoleColors::UNDERLINEDWHITE: return "\033[4;37m";
+			case ConsoleColors::UNDERLINEDCYAN: return "\033[4;36m";
 
 			case ConsoleColors::RESET:
 			default: return "\033[0m";

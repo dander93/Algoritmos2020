@@ -10,6 +10,9 @@ using namespace ListHelper;
 
 namespace ventasNamespace
 {
+	/**
+	 * @brief Estructura del tipo Venta
+	*/
 	struct Venta {
 		char codEmp[9 + 1];
 		int codProd;
