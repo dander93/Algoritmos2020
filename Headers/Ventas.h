@@ -65,6 +65,23 @@ namespace ventasNamespace
 	}
 
 	/**
+	 * @brief Lee todos los registros de un archivo de ventas y agrega todas las ventas a una lista de ventas comun
+	 * @param salesFileStream El stream del archivo a leer
+	 * @param listRoot La raiz de la lista
+	*/
+	void loadSalesFromFile(FILE* salesFileStream, ListNode<Venta>*& listRoot) {
+		Venta venta;
+		fread(&venta, sizeof(Venta), 1, salesFileStream);
+		while (!feof(salesFileStream))
+		{
+			addToList(listRoot, venta);
+			fread(&venta, sizeof(Venta), 1, salesFileStream);
+		}
+
+		setAtFileStart(salesFileStream);
+	}
+
+	/**
 	 * @deprecated La función fue substituida por una función anónima
 	 * @brief Función que muestra las ventas
 	 * @param root La raiz de la lista de ventas

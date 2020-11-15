@@ -43,11 +43,7 @@ void generarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 		{
 			if (isEmployeeSale(empleados[i].codEmp, venta))
 			{
-
-				/*
-				TODO: HAY QUE REVISAR EL ADDTOLIST QUE FUNCIONA MAL
-				*/
-				reportesEmpleados[i].productosVendidos = addToList(reportesEmpleados[i].productosVendidos, venta);
+				addToList(reportesEmpleados[i].productosVendidos, venta);
 				reportesEmpleados[i].totalRecaudado += venta.precioVenta;
 				reportesEmpleados[i].totalProductosVendidos++;
 			}
@@ -74,17 +70,17 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 		cout << "Codigo de empleado: " << reportesEmpleados[i].empleado.codEmp << endl;
 		cout << "Nombre y apellido: " << reportesEmpleados[i].empleado.nombYApe << endl;
 		cout << "Total de productos vendidos: " << reportesEmpleados[i].totalProductosVendidos << endl;
-		cout << "Total recaudado: $" << reportesEmpleados[i].totalRecaudado << endl << endl;
+		cout << "Total recaudado: $" << reportesEmpleados[i].totalRecaudado << endl;
 		cout << "Productos Vendidos:" << endl;
-		
 		cout << "Codigo Producto" << " | " << "Fecha" << endl;
 
 		//utilizo una función anónima para mostrar la lista de ventas
-		printList<Venta>(reportesEmpleados[i].productosVendidos->next, [](ListNode<Venta>*& root)
+		printList<Venta>(reportesEmpleados[i].productosVendidos, [](ListNode<Venta>*& root)
 			{
 				Venta venta = pop<Venta>(root);
 				cout << venta.codProd << " | " << venta.fecha << endl;
 			});
+
 		cout << endl << endl;
 	}
 }
