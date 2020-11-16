@@ -73,6 +73,7 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 					Venta venta = pop<Venta>(root);
 					cout << "|" << venta.codProd << "\t\t |" << venta.fecha << " |" << endl;
 				});
+
 			cout << "|" << getColor(ConsoleColors::UNDERLINEDWHITE) << "                |         " << getColor(ConsoleColors::RESET) << "|" << endl;
 		}
 		else
@@ -83,16 +84,19 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 	}
 }
 
+/**
+ * @brief Ordena los empleados por total recaudado desc y los productos que vendió cada empleado por desc
+ * @param reportesEmpleados La lista de reportes
+ * @param lenEmpleados El largo útil de empleados
+*/
 void ordenarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
 	orderEmployees(reportesEmpleados, lenEmpleados);
 	for (int empleadoSeleccionado = 0; empleadoSeleccionado < lenEmpleados; empleadoSeleccionado++)
 	{
-		/*
-		orderList(reportesEmpleados[empleadoSeleccionado].productosVendidos, []()
+		orderList<Venta>(reportesEmpleados[empleadoSeleccionado].productosVendidos, [](Venta ventaActual, Venta ventaSiguiente)
 			{
-				return 0;
+				return ventaSiguiente.fecha - ventaActual.fecha;
 			});
-		*/
 	}
 
 }
