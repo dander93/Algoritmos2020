@@ -103,29 +103,93 @@ namespace LoggerHelper
 	 * @return El string necesario para imprimir con ese color en la consola
 	*/
 	string getColor(ConsoleColors color) {
+		/*
+		* En windows el escape ANSI no funciona más a partir de windows 10 , evitamos que se vea toda la secuencia de escape
+		* _WIN32 es una variable comun al compilador de c++ que indica si es windows en donde se ejcuta la aplicación
+		* */
+		if (_WIN32)
+			return "";
+
 		switch (color)
 		{
-			case ConsoleColors::CYAN: return "\033[36m";
-			case ConsoleColors::BLACK: return  "\033[30m";
-			case ConsoleColors::RED: return  "\033[31m";
-			case ConsoleColors::GREEN: return "\033[32m";
-			case ConsoleColors::YELLOW: return "\033[33m";
-			case ConsoleColors::BLUE: return "\033[34m";
-			case ConsoleColors::MAGENTA: return "\033[35m";
-			case ConsoleColors::WHITE: return  "\033[37m";
-			case ConsoleColors::BOLDBLACK: return "\033[1;30m";
-			case ConsoleColors::BOLDRED: return "\033[1m;31m";
-			case ConsoleColors::BOLDGREEN: return "\033[1;32m";
-			case ConsoleColors::BOLDYELLOW: return "\033[1;33m";
-			case ConsoleColors::BOLDBLUE: return "\033[1;34m";
-			case ConsoleColors::BOLDMAGENTA: return "\033[1;35m";
-			case ConsoleColors::BOLDCYAN: return "\033[1;36m";
-			case ConsoleColors::BOLDWHITE: return "\033[1;37m";
-			case ConsoleColors::UNDERLINEDWHITE: return "\033[4;37m";
-			case ConsoleColors::UNDERLINEDCYAN: return "\033[4;36m";
+			case ConsoleColors::CYAN:
+			{
+				return "\033[36m";
+			}
+			case ConsoleColors::BLACK:
+			{
+				return  "\033[30m";
+			}
+			case ConsoleColors::RED:
+			{
+				return  "\033[31m";
+			}
+			case ConsoleColors::GREEN:
+			{
+				return "\033[32m";
+			}
+			case ConsoleColors::YELLOW:
+			{
+				return "\033[33m";
+			}
+			case ConsoleColors::BLUE:
+			{
+				return "\033[34m";
+			}
+			case ConsoleColors::MAGENTA:
+			{
+				return "\033[35m";
+			}
+			case ConsoleColors::WHITE:
+			{
+				return  "\033[37m";
+			}
+			case ConsoleColors::BOLDBLACK:
+			{
+				return "\033[1;30m";
+			}
+			case ConsoleColors::BOLDRED:
+			{
+				return "\033[1m;31m";
+			}
+			case ConsoleColors::BOLDGREEN:
+			{
+				return "\033[1;32m";
+			}
+			case ConsoleColors::BOLDYELLOW:
+			{
+				return "\033[1;33m";
+			}
+			case ConsoleColors::BOLDBLUE:
+			{
+				return "\033[1;34m";
+			}
+			case ConsoleColors::BOLDMAGENTA:
+			{
+				return "\033[1;35m";
+			}
+			case ConsoleColors::BOLDCYAN:
+			{
+				return "\033[1;36m";
+			}
+			case ConsoleColors::BOLDWHITE:
+			{
+				return "\033[1;37m";
+			}
+			case ConsoleColors::UNDERLINEDWHITE:
+			{
+				return "\033[4;37m";
+			}
+			case ConsoleColors::UNDERLINEDCYAN:
+			{
+				return "\033[4;36m";
+			}
 
 			case ConsoleColors::RESET:
-			default: return "\033[0m";
+			default:
+			{
+				return "\033[0m";
+			}
 		}
 	}
 
