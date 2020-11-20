@@ -111,16 +111,6 @@ namespace empleadosNamespace
 	}
 
 	/**
-	 * @deprecated
-	 * @brief
-	 * @param node
-	 * @param sale
-	*/
-	void addEmployeeSale(ListNode<Venta>* node, Venta sale) {
-		//push<Venta>();
-	}
-
-	/**
 	 * @brief Ordena los reportes de los empleados
 	 * @param reportesEmpleados El array de reportes
 	 * @param lenEmpleados La cantidad útil de empleados
