@@ -188,11 +188,15 @@ namespace ListHelper
 
 		ListNode<T>* auxRoot = root;
 		ListNode<T>* prevRoot = NULL;
+
+		//Value viene por parámetro orderlist en nuestro caso ( el resultado del pop de la lista original)
+		//Mientras la lista auxilair no esté vacía y el elemento no exista
 		while (auxRoot != NULL && criteria(auxRoot->data, value) < 0)
 		{
 			prevRoot = auxRoot;
 			auxRoot = auxRoot->next;
 		}
+
 
 		newRoot->next = auxRoot;
 		if (prevRoot == NULL)

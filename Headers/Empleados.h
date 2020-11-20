@@ -126,10 +126,14 @@ namespace empleadosNamespace
 	 * @param lenEmpleados La cantidad útil de empleados
 	*/
 	void orderEmployees(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
-		for (int j = 1; j <= lenEmpleados - 1; j = j + 1)
+		/**
+		 * @brief Ordenanamos por burbujeo
+		*/
+		for (int j = 1; j < lenEmpleados; j++)
 		{
-			for (int i = 0; i <= lenEmpleados - 1 - 1; i = i + 1)
+			for (int i = 0; i < lenEmpleados - 1; i++)
 			{
+				//Comparamos un elemento con su siguiente
 				if (reportesEmpleados[i].totalRecaudado < reportesEmpleados[i + 1].totalRecaudado)
 				{
 					reporteVentaEmpleados aux = reportesEmpleados[i];

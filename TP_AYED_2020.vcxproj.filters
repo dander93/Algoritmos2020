@@ -21,6 +21,9 @@
     <ClCompile Include="ayed2020tp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Headers\Empleados.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Documentacion\TP_AYED_2020.docx">

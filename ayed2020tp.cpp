@@ -62,6 +62,7 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 		cout << getColor(ConsoleColors::GREEN) << "Nombre y apellido: " << getColor(ConsoleColors::RESET) << reportesEmpleados[i].empleado.nombYApe << endl;
 		cout << getColor(ConsoleColors::GREEN) << "Total de productos vendidos: " << getColor(ConsoleColors::RESET) << reportesEmpleados[i].totalProductosVendidos << endl;
 		cout << getColor(ConsoleColors::GREEN) << "Total recaudado: " << getColor(ConsoleColors::RESET) << "$" << reportesEmpleados[i].totalRecaudado << endl;
+		cout << endl;
 		cout << "   " << getColor(ConsoleColors::UNDERLINEDCYAN) << "Productos Vendidos" << getColor(ConsoleColors::RESET) << endl;
 		if (reportesEmpleados[i].productosVendidos != NULL)
 		{
@@ -70,6 +71,7 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
 			//utilizo una función anónima para mostrar la lista de ventas
 			printList<Venta>(reportesEmpleados[i].productosVendidos, [](ListNode<Venta>*& root)
 				{
+					//esto se ejecuta por cada vez que recorre la lista ya que se ejecuta dentro de printList mientras la lista no esté vacía
 					Venta venta = pop<Venta>(root);
 					cout << "|" << venta.codProd << "\t\t |" << venta.fecha << " |" << endl;
 				});
@@ -90,11 +92,18 @@ void mostrarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados
  * @param lenEmpleados El largo útil de empleados
 */
 void ordenarReportes(reporteVentaEmpleados reportesEmpleados[], int lenEmpleados) {
+
 	orderEmployees(reportesEmpleados, lenEmpleados);
+
 	for (int empleadoSeleccionado = 0; empleadoSeleccionado < lenEmpleados; empleadoSeleccionado++)
 	{
+		//Utiliza el concepto de pila, ya que no tiene un puntero al incio y al final 
 		orderList<Venta>(reportesEmpleados[empleadoSeleccionado].productosVendidos, [](Venta ventaActual, Venta ventaSiguiente)
 			{
+				//paso la función anónima entera para ejecutarse adentro del order list, ya que es una función anónima
+
+				//la fecha que quiero agregar menos la fecha que tengo
+				//si los quiero invertir , cambio los factores de lugar
 				return ventaSiguiente.fecha - ventaActual.fecha;
 			});
 	}
@@ -106,6 +115,9 @@ void resolucionTp() {
 	// recordar usar la libreria string.h para el manejo de comparación y copia de valores de cadenas
 	// funciones útiles para usar: strcmp y stcpy
 
+	/**
+	 * @brief Son 4 porque así está definido en crear empleados como cantidad útil
+	*/
 	const int lenEmpleados = 4;
 
 	reporteVentaEmpleados reportesEmpleados[CANT_MAX_EMPLEADOS];
@@ -116,11 +128,10 @@ void resolucionTp() {
 	mostrarReportes(reportesEmpleados, lenEmpleados);
 }
 
+/**
+ * @brief Configuración del ambiente
+*/
 void setUpEnvironment() {
-
-	/*
-	* ¿Hacer un archivo de config plano .cfg? ¿Un appsettings .xml? ¿Un appsettings .json?
-	* */
 	LOG_TCONSOLE_ENABLED = false;
 	LOG_TOFILE_ENABLED = true;
 
@@ -132,6 +143,9 @@ void setUpEnvironment() {
 	PATH_VENTAS_DAT_FILE_NAME = "Ventas.dat";
 }
 
+/**
+ * @brief Secuencia de inicio de la solución
+*/
 void initProc() {
 	LogEventType theLogs[10];
 	int logLen = 0;
@@ -166,7 +180,7 @@ int main() {
 	logInfo("fin de la resolucion del TP", "main");
 
 	logInfo("Fin del programa", "main");
-
+	
 	//vale 0 y está definido en el header de stdlib
 	return EXIT_SUCCESS;
 }

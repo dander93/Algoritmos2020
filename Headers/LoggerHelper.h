@@ -105,90 +105,94 @@ namespace LoggerHelper
 	string getColor(ConsoleColors color) {
 		/*
 		* En windows el escape ANSI no funciona más a partir de windows 10 , evitamos que se vea toda la secuencia de escape
-		* _WIN32 es una variable comun al compilador de c++ que indica si es windows en donde se ejcuta la aplicación
+		* 
+		* _WIN32: es una variable comun al compilador de c++ que indica si es windows en donde se ejecuta la aplicación
 		* */
+
 		if (_WIN32)
 			return "";
+
+		const string ESCSEQ = "\033";
 
 		switch (color)
 		{
 			case ConsoleColors::CYAN:
 			{
-				return "\033[36m";
+				return ESCSEQ + "[36m";
 			}
 			case ConsoleColors::BLACK:
 			{
-				return  "\033[30m";
+				return  ESCSEQ + "[30m";
 			}
 			case ConsoleColors::RED:
 			{
-				return  "\033[31m";
+				return  ESCSEQ + "[31m";
 			}
 			case ConsoleColors::GREEN:
 			{
-				return "\033[32m";
+				return  ESCSEQ + "[32m";
 			}
 			case ConsoleColors::YELLOW:
 			{
-				return "\033[33m";
+				return ESCSEQ + "[33m";
 			}
 			case ConsoleColors::BLUE:
 			{
-				return "\033[34m";
+				return ESCSEQ + "[34m";
 			}
 			case ConsoleColors::MAGENTA:
 			{
-				return "\033[35m";
+				return ESCSEQ + "[35m";
 			}
 			case ConsoleColors::WHITE:
 			{
-				return  "\033[37m";
+				return  ESCSEQ + "[37m";
 			}
 			case ConsoleColors::BOLDBLACK:
 			{
-				return "\033[1;30m";
+				return ESCSEQ + "[1;30m";
 			}
 			case ConsoleColors::BOLDRED:
 			{
-				return "\033[1m;31m";
+				return ESCSEQ + "[1m;31m";
 			}
 			case ConsoleColors::BOLDGREEN:
 			{
-				return "\033[1;32m";
+				return ESCSEQ + "[1;32m";
 			}
 			case ConsoleColors::BOLDYELLOW:
 			{
-				return "\033[1;33m";
+				return ESCSEQ + "[1;33m";
 			}
 			case ConsoleColors::BOLDBLUE:
 			{
-				return "\033[1;34m";
+				return ESCSEQ + "[1;34m";
 			}
 			case ConsoleColors::BOLDMAGENTA:
 			{
-				return "\033[1;35m";
+				return ESCSEQ + "[1;35m";
 			}
 			case ConsoleColors::BOLDCYAN:
 			{
-				return "\033[1;36m";
+				return ESCSEQ + "[1;36m";
 			}
 			case ConsoleColors::BOLDWHITE:
 			{
-				return "\033[1;37m";
+				return ESCSEQ + "[1;37m";
 			}
 			case ConsoleColors::UNDERLINEDWHITE:
 			{
-				return "\033[4;37m";
+				return ESCSEQ + "[4;37m";
 			}
 			case ConsoleColors::UNDERLINEDCYAN:
 			{
-				return "\033[4;36m";
+				return ESCSEQ + "[4;36m";
 			}
 
 			case ConsoleColors::RESET:
 			default:
 			{
-				return "\033[0m";
+				return ESCSEQ + "[0m";
 			}
 		}
 	}
