@@ -141,7 +141,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ayed2020tp.cpp" />
-    <ClCompile Include="Headers\Empleados.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
